@@ -18,23 +18,43 @@ Establish a stable Electrical Idle condition before receiver detection. Ensure t
 - Receivers must meet the **ZRX-DC** spec for 2.5 GT/s within **1 ms** of entering this state.
 - The LTSSM must not exit `Detect.Quiet` until all receivers meet the ZRX-DC spec.
 
-### Register and Variable Reset Behavior
-All the following are **reset to 0b**:
-- Equalization phase status bits (Phase1, Phase2, Phase3, Complete) for:
-  - 8.0 GT/s
-  - 16.0 GT/s
-  - 32.0 GT/s
-  - 64.0 GT/s
+### Register Reset Behavior
+These register fields are **reset to 0b**:
+- Link Status 2 Register:
+  - Equalization 8.0GT/s Phase1 Successful
+  - Equalization 8.0GT/s Phase2 Successful
+  - Equalization 8.0GT/s Phase3 Successful
+  - Equalization 8.0GT/s Complete
+  - Equalization 16.0GT/s Phase1 Successful
+  - Equalization 16.0GT/s Phase2 Successful
+  - Equalization 16.0GT/s Phase3 Successful
+  - Equalization 16.0GT/s Complete
+  - Equalization 32.0GT/s Phase1 Successful
+  - Equalization 32.0GT/s Phase2 Successful
+  - Equalization 32.0GT/s Phase3 Successful
+  - Equalization 32.0GT/s Complete
+  - Equalization 64.0GT/s Phase1 Successful
+  - Equalization 64.0GT/s Phase2 Successful
+  - Equalization 64.0GT/s Phase3 Successful
+  - Equalization 64.0GT/s Complete
+- Device Status 3 Register
+  - Remote L0p Supported
+
+### Variable Reset Behavior
+All the following variables are **reset to 0**:
 - `use_modified_TS1_TS2_Ordered_Set`
-- `Remote_L0p_Supported`
 - `Flit_Mode_Enabled`
 - `L0p_capable`
 - `SRIS_Mode_Enabled`
 - `directed_speed_change`
 - `upconfigure_capable`
 - `idle_to_rlock_transitioned` (set to 00h)
-- `equalization_done_*GT_data_rate` for all data rates
-- `perform_equalization_for_loopback` and `perform_equalization_for_loopback_64GT`
+- `equalization_done_8GT_data_rate`
+- `equalization_done_16GT_data_rate`
+- `equalization_done_32GT_data_rate`
+- `equalization_done_64GT_data_rate`
+- `perform_equalization_for_loopback`
+- `perform_equalization_for_loopback_64GT`
 
 ### Legacy Device Behavior
 Older devices that do not implement:
@@ -57,10 +77,3 @@ Transition to `Detect.Active`:
 
 If entering `Detect.Quiet` from `Hot Reset`, the Downstream Port is recommended to wait **2 ms** before enabling EIE detection.
 
----
-
-## Spec References
-- PCI Express Base Specification Rev 6.2  
-  - Section 4.2.7.1 — Detect  
-  - Section 4.2.7.1.1 — Detect.Quiet  
-  - Table 8-12 — ZRX-DC timing
