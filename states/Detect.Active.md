@@ -33,3 +33,4 @@ Otherwise:
 
 ## Spec Reference  
 - Base Spec 6.2 2024-01-25, Section 4.2.7.1
+- Receiver Detection: Section 8.4.5.7
