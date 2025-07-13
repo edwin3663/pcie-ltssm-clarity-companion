@@ -34,7 +34,7 @@ Next State: `Polling.Compliance`
 
 ---
 
-### Case 2: Completed TS1s Exchange on All Lanes
+### Case 2: Completed Training Sequences Exchange on All Lanes
 If at least 1024 TS1 Ordered Sets have been transmitted, and **All lanes that detected a receiver during Detect** receive eight consecutive training sequences (or their complements) of one of the following:
   - TS1 with PAD/PAD and Compliance Receive bit = 0b
   - TS1 with PAD/PAD and Loopback bit = 1b
