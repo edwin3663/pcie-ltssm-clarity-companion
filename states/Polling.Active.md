@@ -28,39 +28,41 @@ Establish Bit Lock and either Symbol Lock (for 8b/10b) or Block Lock (for 128b/1
 
 ## Exit Conditions
 
-### Case 1. Immediate transition to Polling.Compliance
-If the `Enter Compliance` bit (bit 4) in the Link Control 2 Register is set to 1b **prior** to entering `Polling.Active`, then:
-- Transition to `Polling.Compliance` immediately without sending any TS1 Ordered Sets.
+### Case 1: Enter Compliance Bit Set Before Entry
+If the `Enter Compliance` bit in the Link Control 2 Register is set to 1b **prior** to entering `Polling.Active`, TS1 Ordered Set transmision is skipped.
+Next State: `Polling.Compliance`
 
 ---
 
-### Case 2. Transition to Polling.Configuration
-Occurs when:
-- At least 1024 TS1 Ordered Sets have been transmitted, and  
-- **All lanes that detected a receiver during Detect** receive eight consecutive training sequences (or complements) of one of the following:
+### Case 2: Completed TS1s Exchange on All Lanes
+If at least 1024 TS1 Ordered Sets have been transmitted, and **All lanes that detected a receiver during Detect** receive eight consecutive training sequences (or their complements) of one of the following:
   - TS1 with PAD/PAD and Compliance Receive bit = 0b
   - TS1 with PAD/PAD and Loopback bit = 1b
   - TS2 with PAD/PAD
 
+Next State: `Polling.Configuration`
+
 ---
 
-### Case 3. Timeout-driven transition to Polling.Configuration
+### Case 3: Timeout with Partial Lane Success
 If 24 ms have elapsed, transition to `Polling.Configuration` if both of the following are true:
 
-**(i)** Any lane that detected a receiver during Detect receives eight consecutive TS1 or TS2 sequences satisfying:
+**(1)** Any lane that detected a receiver during Detect receives eight consecutive training sequences satisfying:
 - TS1 (PAD/PAD) with Compliance Receive = 0b, or
 - TS1 (PAD/PAD) with Loopback = 1b, or
 - TS2 (PAD/PAD)
 
 **AND**
 
-**(ii)** A predetermined subset of lanes (implementation-specific, but traditionally equal to all lanes that detected a receiver) must have detected at least one exit from Electrical Idle since entering Polling.Active.
+**(2)** A predetermined subset of lanes (implementation-specific, but traditionally equal to all lanes that detected a receiver) must have detected at least one exit from Electrical Idle since entering Polling.Active.
 
 Note: This rule helps prevent a single bad receiver or transmitter from blocking link configuration.
 
+Next State: `Polling.Configuration`
+
 ---
 
-### Case 4. Transition to Polling.Compliance (fallback)
+### Case 4: Fallback Due to Passive Load or Incomplete Exit
 If either of the following is true:
 - Not all lanes from the predetermined set in (ii) have detected an exit from Electrical Idle.
 - Any lane receives eight consecutive TS1s with:
@@ -70,10 +72,14 @@ If either of the following is true:
 
 This indicates that a passive load may be present or that compliance testing is intended.
 
+Next State: `Polling.Compliance`
+
 ---
 
-### Case 5. Transition to Detect
+### Case 5: No Matching Condition
 If none of the conditions for transitioning to `Polling.Configuration` or `Polling.Compliance` are met.
+
+Next state: `Detect`
 
 ---
 
