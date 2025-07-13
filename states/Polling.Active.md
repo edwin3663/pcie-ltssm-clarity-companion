@@ -48,14 +48,12 @@ Next State: `Polling.Configuration`
 ### Case 3: Timeout with Partial Lane Success
 If 24 ms have elapsed, transition to `Polling.Configuration` if both of the following are true:
 
-**(1)** Any lane that detected a receiver during Detect receives eight consecutive training sequences satisfying:
-- TS1 (PAD/PAD) with Compliance Receive = 0b, or
-- TS1 (PAD/PAD) with Loopback = 1b, or
-- TS2 (PAD/PAD)
+**1.** Any lane that detected a receiver during Detect receives eight consecutive training sequences satisfying:
+  - TS1 (PAD/PAD) with Compliance Receive = 0b, or
+  - TS1 (PAD/PAD) with Loopback = 1b, or
+  - TS2 (PAD/PAD)
 
-**AND**
-
-**(2)** A predetermined subset of lanes (implementation-specific, but traditionally equal to all lanes that detected a receiver) must have detected at least one exit from Electrical Idle since entering Polling.Active.
+**2.** A predetermined subset of lanes (implementation-specific, but traditionally equal to all lanes that detected a receiver) must have detected at least one exit from Electrical Idle since entering Polling.Active.
 
 Note: This rule helps prevent a single bad receiver or transmitter from blocking link configuration.
 
@@ -65,7 +63,8 @@ Next State: `Polling.Configuration`
 
 ### Case 4: Fallback Due to Passive Load or Incomplete Exit
 If either of the following is true:
-- Not all lanes from the predetermined set in (ii) have detected an exit from Electrical Idle.
+- Not all lanes from the predetermined set in (implementation-specific, but traditionally equal to all lanes that detected a receiver) must have detected at least one exit from Electrical Idle since entering Polling.Active.
+  
 - Any lane receives eight consecutive TS1s with:
   - Lane and Link = PAD,
   - Compliance Receive = 1b,
