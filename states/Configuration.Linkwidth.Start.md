@@ -5,25 +5,28 @@ Assign link numbers.
 
 ## Downstream Port Behavior
 
-### Case 1: Linkup = 0 or Not Initiating Upconfigration of Link Width
+### Case 1: The Link Is Not Up or Not Initiating Upconfigration of Link Width
 
 Transmit TS1 Ordered Sets on all active downstream lanes. The TS1s must: 
 - Set the `Link` field to the selected link number
 - Set the `Lane` field to PAD 
 - Advertise all supported data rates from 2.5 to 32.0 GT/s using the `Data Rate Identifier` symbol
 
-If `upconfigure_capable = 1b` and upconfiguration is not being initiated, transmit TS1s on any inactive lane that:  
+If `upconfigure_capable = 1b`, transmit TS1s on any inactive lane that:  
 – Detected an exit from Electrical Idle during `Recovery`,
-– Received two consecutive TS1s with `Link = PAD` and `Lane = PAD`.
+– Received two consecutive TS1s with both the `Link` and the `Lane` fields set to `PAD`.
 
-### Case 2: Linkup = 1 and Initiating Upconfiguration of the Link Width
+### Case 2: Link Is Up and Initiating Upconfiguration of the Link Width
 
-Begin by transmitting TS1s with `Link = PAD` and `Lane = PAD` on:  
-  – Active lanes  
-  – Inactive lanes to be added to the link  
-  – Lanes that detected Electrical Idle exit and received two TS1s with `PAD` values
+Begin by transmitting TS1s with both the `Link` and `Lane` fields set to `PAD` on:  
+– Active lanes  
+- Inactive lanes to be added to the link
+- Lanes that detected Electrical Idle exit and received two TS1s with `PAD` values
 
-After any of those lanes receive two TS1s with `PAD` fields or after 1 ms, switch to transmitting TS1s with the selected `Link Number` and `Lane = PAD`.
+Once each of the transmitting lanes either:
+- Receives two consecutive TS1s with both the `Link` and the `Lane` fields set to `PAD`, or
+- after 1 ms
+switch to transmitting TS1s with the `Link` field set to the selected link number and `Lane` field set to `PAD`.
 
 \* **Note on active lanes:**  
 Lanes are considered active based on how the state was entered:  
@@ -51,7 +54,7 @@ If either of the following is true:
 Next State: `Loopback`
 
 ### Case 4: Transition to Linkwidth.Accept
-If a lane first receives one or more TS1s with `Link` and `Lane` fields set to `PAD`, and then receives two consecutive TS1s with a **non-PAD Link number that matches one of the transmitted values**, and `Lane = PAD`.
+If a lane first receives one or more TS1s with `Link` and `Lane` fields set to `PAD`, and then receives two consecutive TS1s with a **non-PAD Link number that matches one of the transmitted values**, and the `Lane` field set to `PAD`.
 
 Next State: `Configuration.Linkwidth.Accept`
 
