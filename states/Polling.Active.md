@@ -14,10 +14,11 @@ Establish Bit Lock and either Symbol Lock (for 8b/10b) or Block Lock (for 128b/1
 ## Behavior
 
 ### TS1 Transmission
-- The Transmitter sends TS1 Ordered Sets on all lanes that detected a receiver in the `Detect` state.
-- TS1 Ordered Sets must have the Link and Lane numbers set to PAD.
-- The Data Rate Identifier Symbol must advertise **all supported data rates between 2.5 GT/s and 32.0 GT/s**, including those not intended for use.
-- Ports are **not permitted** to advertise speeds greater than 32.0 GT/s in this state.
+The Transmitter sends TS1 Ordered Sets on all lanes that detected a receiver in the `Detect` state. Each TS1 must:
+- Set the `Link` and `Lane` fields to `PAD`.
+- Use the `Data Rate Identifier` Symbol to advertise all supported data rates between 2.5 GT/s and 32.0 GT/s, even if some are not intended for use.
+
+Note: Ports are **not permitted** to advertise speeds greater than 32.0 GT/s in this state.
 
 ### Electrical Requirements
 - The Transmitter must allow its TX common mode voltage to settle before exiting Electrical Idle.
