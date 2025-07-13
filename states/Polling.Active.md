@@ -33,8 +33,6 @@ Note: Ports are **not permitted** to advertise speeds greater than 32.0 GT/s in 
 If the `Enter Compliance` bit in the Link Control 2 Register is set to 1b **prior** to entering `Polling.Active`, TS1 Ordered Set transmision is skipped.
 Next State: `Polling.Compliance`
 
----
-
 ### Case 2: Completed Training Sequences Exchange on All Lanes
 If at least 1024 TS1 Ordered Sets have been transmitted, and **All lanes that detected a receiver during Detect** receive eight consecutive training sequences (or their complements) of one of the following:
   - TS1 with PAD/PAD and Compliance Receive bit = 0b
