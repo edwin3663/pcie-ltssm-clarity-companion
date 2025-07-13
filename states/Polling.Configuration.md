@@ -20,14 +20,11 @@ Signal readiness to proceed to the Configuration state. The receiver applies pol
 
 - If required, the Transmitter's **Polling.Compliance sequence setting** is updated as described in Section: § 4.2.7.2.2
 
-- The Transmitter sends **TS2 Ordered Sets** on all lanes that detected a receiver during the `Detect` state.
+- The Transmitter sends **TS2 Ordered Sets** on all lanes that detected a receiver during the `Detect` state. Each TS2 must
+  - Set the `Link` and `Lane` fields to `PAD`.
+  - Use the `Data Rate Identifier` Symbol to advertise all supported data rates between 2.5 GT/s and 32.0 GT/s, even if some are not intended for use.
 
-  - The `Link` and `Lane` fields must be set to `PAD`.
-
-  - The `Data Rate Identifier` field must advertise all data rates the Port supports between 2.5 GT/s and 32.0 GT/s, including those it does not intend to use.
-
-  - Data rates above 32.0 GT/s must not be advertised in this substate.
-
+Note: Ports are **not permitted** to advertise speeds greater than 32.0 GT/s in this state.
 
 ---
 
