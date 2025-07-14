@@ -3,18 +3,34 @@
 ## Purpose
 Assign link numbers.
 
-## Downstream Port Behavior
+## Behavior
 
 ### Case 1: The Link Is Not Up or Not Initiating Upconfigration of Link Width
 
-Transmit TS1 Ordered Sets on all active downstream lanes. The TS1s must: 
-- Set the `Link` field to the selected link number
-- Set the `Lane` field to PAD 
-- Advertise all supported data rates from 2.5 to 32.0 GT/s using the `Data Rate Identifier` symbol
+#### Downstream Ports:
+
+Transmit TS1 Ordered Sets on all active Downstream Lanes. 
 
 If `upconfigure_capable = 1b`, transmit TS1s on any inactive lane that:  
 – Detected an exit from Electrical Idle during `Recovery`,
 – Received two consecutive TS1s with both the `Link` and the `Lane` fields set to `PAD`.
+
+The TS1s must:
+- Set the `Link` field to the selected link number and the `Lane` field to `PAD` 
+- Advertise all supported data rates from 2.5 to 32.0 GT/s using the `Data Rate Identifier` symbol
+
+#### Upstream Ports:
+
+Transmit TS1 Ordered Sets on all active Upstream Lanes.
+
+If `upconfigure_capable = 1b`, transmit TS1s on any inactive lane that:  
+– Detected an exit from Electrical Idle during `Recovery`,
+– Received two consecutive TS1s with both the `Link` and the `Lane` fields set to `PAD`.
+
+The TS1s must:
+- Set both the `Link` and `Lane` field to `PAD` 
+- Advertise all supported data rates from 2.5 to 32.0 GT/s using the `Data Rate Identifier` symbol
+
 
 ### Case 2: Link Is Up and Initiating Upconfiguration of the Link Width
 
@@ -37,12 +53,23 @@ Lanes are considered active based on how the state was entered:
 ## Exit Conditions
 
 ### Case 1: Directed to Disable
-If a higher layer instructs the port to disable the link by setting the `Disable Link` bit in TS1/TS2 on all active lanes that detected a receiver during `Detect`.
+
+#### Downstream Ports
+If a higher layer directs the port assert the `Disable Link` bit in TS1/TS2 on all lanes that detected a receiver during `Detect`.
+
+#### Upstream Ports
+If a higher layer directs the port assert the `Disable Link` bit in TS1/TS2 on all lanes that detected a receiver during `Detect`.
+
 
 Next State: `Disabled`
 
 ### Case 2: Directed to Loopback
-If a higher layer sets the `Loopback` bit in TS1/TS2 and the Transmitter is capable of acting as a Loopback Lead.
+
+**Downstream Ports**
+If a higher layer directs the port to assert the `Loopback` bit in TS1/TS2 on all lanes that detected a receiver during `Detect` and the Transmitter is capable of acting as a Loopback Lead.
+
+**Upstream Ports**
+If a higher layer directs the port to assert the `Loopback` bit in TS1/TS2 on all lanes that detected a receiver during `Detect`.
 
 Next State: `Loopback`
 
