@@ -13,12 +13,9 @@ If `upconfigure_capable = 1b`, also transmit TS1s on each inactive lane that:
 - Detected an exit from Electrical Idle during `Recovery`, and
 - Received two consecutive TS1s with both the `Link` and the `Lane` fields set to `PAD`.
 
-#### TS1 Transmission
-
-In this case, TS1s must advertise all supported data rates from 2.5 to 32.0 GT/s using the `Data Rate Identifier` symbol.
-
-- Downstream ports: Set the `Link` field to the selected link number and the `Lane` field to `PAD` 
-- Upstream ports: Set both the `Link` and `Lane` field to `PAD` 
+In this case, TS1s must advertise all supported data rates from 2.5 to 32.0 GT/s using the `Data Rate Identifier` symbol. Also:
+- Downstream ports must set the `Link` field to the selected link number and the `Lane` field to `PAD` 
+- Upstream ports must set both the `Link` and `Lane` field to `PAD` 
 
 #### Crosslink Support (Optional)
 
@@ -35,20 +32,20 @@ Next state: `Configuration.Linkwidth.Start`
 ### Case 2: Link Is Up and Initiating Upconfiguration of the Link Width
 
 Begin by transmitting TS1s with both the `Link` and `Lane` fields set to `PAD` on:  
-– Active lanes  
+- Active lanes  
 - Inactive lanes to be added to the link
 - Lanes that detected Electrical Idle exit and received two TS1s with `PAD` values
 
-### Upstream Ports
+#### Upstream Ports
 
 Once each of the transmitting lanes either:
 - Receives two consecutive TS1s with both the `Link` and the `Lane` fields set to `PAD`, or
 - after 1 ms
 switch to transmitting TS1s with the `Link` field set to the selected link number and `Lane` field set to `PAD`.
 
-### Downstream Ports
+#### Downstream Ports
 
-
+asdfasdf
 
 \* **Note on active lanes:**  
 Lanes are considered active based on how the state was entered:  
