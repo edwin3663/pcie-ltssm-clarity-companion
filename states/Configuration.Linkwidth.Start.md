@@ -25,7 +25,7 @@ Afterward:
 - If any Downstream Lane receives two consecutive TS1 Ordered Sets with the `Link` field set to non-PAD and the `Lane` number set to `PAD`, it is reclassified as an Upstream Lane and a new random Crosslink timeout is chosen.
 - If any Upstream Lane receives two consecutive TS1 Ordered Sets with both the `Link` and the `Lane` fields set to `PAD`, it is reclassified as a Downstream Lane and a new random Crosslink timeout is chosen.
 
-**Note:** This mechnaism supports the optional Crosslink where both sides initially operate as both Downstream Ports or both Upstream Ports. Role reesoulution is acheveived by reclassifing ports, based on recieved TS1s, and assigning a random timeout until one side of the Link becomes a Downstream Port and the other side remains an Upstream Port. This timeout must be random, even when connecting identical devices, so as to eventually break any possible deadlock.
+**Note:** This mechnaism supports the optional Crosslink where both sides initially operate as both Downstream Ports or both Upstream Ports. Role resoulution is acheveived by reclassifing ports based on recieved TS1s, and assigning a random timeout until one side of the Link becomes a Downstream Port and the other side remains an Upstream Port. This timeout must be random, even when connecting identical devices, so as to eventually break any possible deadlock.
 
 Next state: `Configuration.Linkwidth.Start`
 
