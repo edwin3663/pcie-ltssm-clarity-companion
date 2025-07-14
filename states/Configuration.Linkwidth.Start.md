@@ -13,6 +13,13 @@ If `upconfigure_capable = 1b`, also transmit TS1s on each inactive lane that:
 - Detected an exit from Electrical Idle during `Recovery`, and
 - Received two consecutive TS1s with both the `Link` and the `Lane` fields set to `PAD`.
 
+#### TS1 Transmission
+
+In this case, TS1s must advertise all supported data rates from 2.5 to 32.0 GT/s using the `Data Rate Identifier` symbol.
+
+- Downstream ports: Set the `Link` field to the selected link number and the `Lane` field to `PAD` 
+- Upstream ports: Set both the `Link` and `Lane` field to `PAD` 
+
 #### Crosslink Support (Optional)
 
 If Crosslink is supported, all lanes that detected a receiver during detect must transmit 16-32 TS1 Ordered Sets.
@@ -24,13 +31,6 @@ Afterward:
 **Note:** This mechnaism supports the optional Crosslink where both sides initially operate as both Downstream Ports or both Upstream Ports. Role reesoulution is acheveived by reclassifing ports, based on recieved TS1s, and assigning a random timeout until one side of the Link becomes a Downstream Port and the other side remains an Upstream Port. This timeout must be random, even when connecting identical devices, so as to eventually break any possible deadlock.
 
 Next state: `Configuration.Linkwidth.Start`
-
-#### TS1 Transmission
-
-Unless specified in this case, TS1s must advertise all supported data rates from 2.5 to 32.0 GT/s using the `Data Rate Identifier` symbol.
-
-- Downstream ports: Set the `Link` field to the selected link number and the `Lane` field to `PAD` 
-- Upstream ports: Set both the `Link` and `Lane` field to `PAD` 
 
 ### Case 2: Link Is Up and Initiating Upconfiguration of the Link Width
 
