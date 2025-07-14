@@ -5,7 +5,7 @@ Assign link numbers.
 
 ## Behavior
 
-### Case 1: The Link Not Up or Not Initiating Upconfigration of Link Width
+### Case 1: "The Link Is Not Up" or "Not Initiating Upconfigration of Link Width"
 
 Transmit TS1 Ordered Sets on all active lanes. 
 
@@ -29,7 +29,7 @@ Afterward:
 
 Next state: `Configuration.Linkwidth.Start`
 
-### Case 2: Link Is Up and Initiating Upconfiguration of the Link Width
+### Case 2: "Link Is Up" and "Initiating Upconfiguration of the Link Width"
 
 Begin by transmitting TS1s with both the `Link` and `Lane` fields set to `PAD` on:  
 - Active lanes  
@@ -88,14 +88,7 @@ If a lane first receives one or more TS1s with `Link` and `Lane` fields set to `
 
 Next State: `Configuration.Linkwidth.Accept`
 
-### Case 5: Optional Crosslink Negotiation
-If `LinkUp = 0b`, crosslink is supported, and:
-1. All downstream lanes that detected a receiver transmit 16–32 TS1s with a non-PAD Link number and `Lane = PAD`, and
-2. Any downstream lane receives two consecutive TS1s with a **non-PAD Link number** (different from PAD) and `Lane = PAD`.
-
-Next State: `Configuration.Linkwidth.Start (as Upstream)`
-
-### Case 6: Timeout
+### Case 5: Timeout
 If none of the above conditions are met within 24 ms.
 
 Next State: `Detect`
